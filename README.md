@@ -18,3 +18,4 @@ Nuestra infraestructura consistirá en las siguientes partes:
 - Base de datos.
 - Servidor
 - PC (Usuario)
+![image](https://github.com/v-Chriz-v/Internet-de-las-cosas/assets/54341749/1bba9400-7ea3-4454-afc9-8446e4c895bb)
