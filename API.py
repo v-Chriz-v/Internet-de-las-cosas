@@ -13,3 +13,7 @@ def obtener_registros():
         return {"registros": registros}
     except FileNotFoundError:
         return {"error": "El archivo de registros no se encuentra"}
+
+@app.get("/Registros")
+def consumir_registros():
+    
