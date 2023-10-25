@@ -60,6 +60,6 @@ class ESP:
 if __name__ == "__main__":
     esp = ESP()
     duracion_captura = 10  # Duración de la captura en segundos
-    archivo_json = "data/registros.json"  # Nombre del archivo JSON
+    archivo_json = "dataESP/registros.json"  # Nombre del archivo JSON
     esp.simular_sensores(duracion_captura, archivo_json)
     esp.publicar_informacion(archivo_json)
