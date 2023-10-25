@@ -25,4 +25,7 @@ channel.queue_declare(queue='mi_cola')
 channel.basic_consume(queue='mi_cola', on_message_callback=callback, auto_ack=True)
 
 print('Esperando mensajes. Para salir, presiona CTRL+C')
-channel.start_consuming()
+try:
+    channel.start_consuming()
+except KeyboardInterrupt:
+    print("Cerrando worker")
