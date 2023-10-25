@@ -1,8 +1,10 @@
 import pika
 import json
 
-# Conexión a RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+# Configura las credenciales de RabbitMQ
+credencial = pika.PlainCredentials(username='Usuario1', password='Contrasenia1')
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', credentials=credencial))
+
 channel = connection.channel()
 
 # Declaración de una cola
