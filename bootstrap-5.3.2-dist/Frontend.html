@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Datos</title>
+    <link rel="stylesheet" href="bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <script src="bootstrap-5.3.2-dist/js/jquery.min.js"></script>
+    <script src="bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .inicio {
+            width: 170px;
+            height: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+
+        .data {
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+
+        .vib {
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+
+        .data img {
+            max-width: 50%;
+            height: auto;
+        }
+
+        .chart-container {
+            width: 200px;
+            height: 200px;
+            margin-left: 500px;
+        }
+
+        .fecha {
+            margin-left: 350px;
+            margin-top: 100px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div id="datosRecientes" class="inicio">
+                    Ultima Sección Anormal
+                    <div class="chart-container">
+                        <canvas id="vibracionesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="vib">
+                    Datos de vibración:
+                </div>
+
+                <div class="data">
+                    Latitud: <br>
+                    Longitud: 
+                </div>
+
+                <img src="ejemplo.jpg" alt="Imagen de datos">
+
+            </div>
+
+        </div>
+
+        <div class="fecha">
+            <br> <label for="fecha">Buscar por fecha: </label>
+            <br> <input type="date" id="fecha">
+            <button onclick="filtrarDatos()">Filtrar</button>
+        </div>
+    </div>
+
+    <script>
+
+        function filtrarDatos() {
+            var fechaSeleccionada = document.getElementById("fecha").value;
+
+        }   
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('vibracionesChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Vibraciones Normales', 'Vibraciones Anormales'],
+                    datasets: [{
+                        data: [25, 75], // Porcentaje de cada categoría (ajusta según tus datos)
+                        backgroundColor: ['#DE1313', '#1D89F0'], // Colores de las categorías
+                    }],
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
