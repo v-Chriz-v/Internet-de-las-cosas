@@ -4,8 +4,15 @@ import json
 # Función que se ejecuta cuando se recibe un mensaje
 def callback(ch, method, properties, body):
     mensaje_json = json.loads(body)
-    print(f"Mensaje recibido: {mensaje_json}")
-    # Realiza aquí cualquier operación que desees con el JSON
+    
+    # Especifica el nombre del archivo en el que deseas guardar el JSON
+    archivo_salida = "archivo_salida.json"
+    
+    with open(archivo_salida, 'w') as file:
+        # Escribe el JSON en el archivo
+        json.dump(mensaje_json, file, indent=4)
+    
+    print(f"Mensaje recibido y guardado en {archivo_salida}")
 
 # Conexión a RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
