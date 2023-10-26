@@ -18,7 +18,7 @@ cursor.execute('''CREATE TABLE Datos (
               Captura BLOB
               )''')
 
-# 4. Insertar datos en la tabla
+# 4. Insertar datos del Json recibido a la BD
 tiempo = "2023-10-25 15:30:00"  # Ejemplo de fecha y hora
 ubicacion = "Latitud: 123.456, Longitud: -78.901"  # Ejemplo de ubicación
 vibracion = 0.123  # Ejemplo de valor de vibración

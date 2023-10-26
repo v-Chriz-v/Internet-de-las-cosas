@@ -1,28 +1,34 @@
 import pika
 import json
 
-# Configura las credenciales de RabbitMQ
-credencial = pika.PlainCredentials(username='Usuario1', password='Contrasenia1')
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', credentials=credencial))
+class Publisher:
+    def __init__(self, server="localhost", queue="mi_cola", user="Usuario1", passw="Contrasenia1"):
+        self.servidor = server
+        self.cola = queue
+        self.credencial = pika.PlainCredentials(username=user, password=passw) # Configura las credenciales de RabbitMQ
+        
+    def enviar_json(self, archivo):
+        connection = pika.BlockingConnection(pika.ConnectionParameters(self.servidor, credentials=self.credencial))
 
-channel = connection.channel()
+        channel = connection.channel()
 
-# Declaración de una cola
-channel.queue_declare(queue='mi_cola')
+        # Declaración de una cola
+        channel.queue_declare(queue=self.cola)
 
-# Nombre del archivo JSON que deseas enviar
-nombre_archivo_json = "registros.json"
+        # Lee el contenido del archivo JSON
+        with open(archivo, 'r') as file:
+            contenido_json = file.read()
 
-# Lee el contenido del archivo JSON
-with open(nombre_archivo_json, 'r') as file:
-    contenido_json = file.read()
+        # Enviar el contenido del archivo JSON como mensaje
+        channel.basic_publish(exchange='',
+                              routing_key=self.cola,
+                              body=contenido_json)
 
-# Enviar el contenido del archivo JSON como mensaje
-channel.basic_publish(exchange='',
-                      routing_key='mi_cola',
-                      body=contenido_json)
+        print(f"JSON de '{archivo}' enviado")
 
-print(f"JSON de '{nombre_archivo_json}' enviado")
+        # Cerrar la conexión
+        connection.close()
 
-# Cerrar la conexión
-connection.close()
+#Prueba del Publisher (exitosa)
+#pub = Publisher()
+#pub.enviar_json("registros.json")
