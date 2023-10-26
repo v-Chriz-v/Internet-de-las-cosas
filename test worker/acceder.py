@@ -15,7 +15,8 @@ resultados = cursor.fetchall()
 
 # Procesar los resultados
 for fila in resultados:
-    tiempo, ubicacion, vibracion, captura = fila
+    id, tiempo, ubicacion, vibracion, captura = fila
+    print(f"ID: {id}")
     print(f"Tiempo: {tiempo}")
     print(f"Ubicación: {ubicacion}")
     print(f"Vibración: {vibracion}")

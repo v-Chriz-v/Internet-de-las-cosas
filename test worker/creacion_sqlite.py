@@ -10,17 +10,13 @@ conn = sqlite3.connect(database_name)
 cursor = conn.cursor()
 
 # 3. Crear una tabla para almacenar los datos
-
-if os.path.exists(database_name):
-    print(f"La base de datos '{database_name}' ya existe.")
-else:
-    print(f"La base de datos '{database_name}' no existe. Creando base de datos")
-    cursor.execute('''CREATE TABLE Datos (
-                  Tiempo DATETIME,
-                  Ubicacion TEXT,
-                  Vibracion REAL,
-                  Captura BLOB
-                  )''')
+cursor.execute('''CREATE TABLE Datos (
+              id INTEGER PRIMARY KEY,
+              Tiempo DATETIME,
+              Ubicacion TEXT,
+              Vibracion REAL,
+              Captura BLOB
+              )''')
 
 # 4. Insertar datos en la tabla
 tiempo = "2023-10-25 15:30:00"  # Ejemplo de fecha y hora
