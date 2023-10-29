@@ -1,22 +1,24 @@
 import sqlite3
 import os
 
-database_name = "mi_base_de_datos.db"
+def crear_tabla(cursor):
+    #Crear una tabla para almacenar los datos
+    cursor.execute('''CREATE TABLE Datos (
+                  id INTEGER PRIMARY KEY,
+                  Tiempo DATETIME,
+                  Ubicacion TEXT,
+                  Vibracion REAL,
+                  Captura BLOB
+                  )''')
+    return
 
-# 1. Conectar o crear una base de datos
+#Conectar o crear una base de datos
 conn = sqlite3.connect(database_name)
 
-# 2. Crear un objeto cursor
+#Crear un objeto cursor
 cursor = conn.cursor()
 
-# 3. Crear una tabla para almacenar los datos
-cursor.execute('''CREATE TABLE Datos (
-              id INTEGER PRIMARY KEY,
-              Tiempo DATETIME,
-              Ubicacion TEXT,
-              Vibracion REAL,
-              Captura BLOB
-              )''')
+#Comprobar si la tabla existe
 
 # 4. Insertar datos del Json recibido a la BD
 tiempo = "2023-10-25 15:30:00"  # Ejemplo de fecha y hora
