@@ -74,7 +74,7 @@
             <div class="col-md-3">
 
                 <div id="datosRecientes" class="inicio">
-                    Ultima Sección Anormal
+                    Última Sección Anormal
                     <div class="chart-container">
                         <canvas id="vibracionesChart"></canvas>
                     </div>
@@ -87,11 +87,11 @@
                 </div>
 
                 <div class="data">
-                    Latitud: <br>
-                    Longitud: 
+                    Latitud: <span id="latitud"></span><br>
+                    Longitud: <span id="longitud"></span>
                 </div>
 
-                <img src="ejemplo.jpg" alt="Imagen de datos">
+                <img src="" id="imagen" alt="Imagen de datos">
 
             </div>
 
@@ -100,16 +100,27 @@
         <div class="fecha">
             <br> <label for="fecha">Buscar por fecha: </label>
             <br> <input type="date" id="fecha">
-            <button onclick="filtrarDatos()">Filtrar</button>
+            <button onclick="cargarDatos()">Cargar Datos</button>
         </div>
     </div>
 
     <script>
-
-        function filtrarDatos() {
-            var fechaSeleccionada = document.getElementById("fecha").value;
-
-        }   
+        function cargarDatos() {
+            // Realizar una solicitud a la API Flask para obtener los datos
+            fetch('http://192.168.1.6:5000/api/datos')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        var primerDato = data[0];
+                        document.getElementById('latitud').textContent = primerDato.Latitud;
+                        document.getElementById('longitud').textContent = primerDato.Longitud;
+                        document.getElementById('imagen').src = `data:image/jpeg;base64,${primerDato.Captura}`;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al obtener datos:", error);
+                });
+        }
 
         document.addEventListener('DOMContentLoaded', function () {
             var ctx = document.getElementById('vibracionesChart').getContext('2d');
@@ -128,7 +139,6 @@
                 }
             });
         });
-
     </script>
 </body>
 </html>

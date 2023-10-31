@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 import sqlite3
 from datetime import datetime
+from flask_cors import CORS
 
 #Conexion de la API a la base de datos
 #La base de datos MySQL
@@ -13,6 +14,7 @@ db_name = "basededatos.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
+CORS(app)
 
 class Datos(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -58,7 +60,7 @@ def get_datos():
 @app.route('/api/datos/fecha', methods=['GET'])
 def obtenerDatosFecha():
     fecha = request.args.get('fecha', default = '', type = str)
-    conn = sqlite3.connect('./test_worker/basededatos.db')
+    conn = sqlite3.connect('./dataServer/basededatos.db')
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM Datos WHERE DATE(Tiempo) = DATE(?)", (fecha,))

@@ -10,7 +10,7 @@ def callback(ch, method, properties, body):
     
     #Guardar datos a la bd
     print(f"Guardando datos en la base de datos...")
-    almacenar_datos(mensaje_json, "basededatos.db")
+    almacenar_datos(mensaje_json, "instance/basededatos.db")
 
 # Configura las credenciales de RabbitMQ
 credencial = pika.PlainCredentials(username='Usuario1', password='Contrasenia1')
