@@ -5,11 +5,14 @@
 - Angel Daniel Lopez Alvarez
 - Marco Antonio Alfaro Baruch
 
-## Descripcion del proyecto
-El proyecto en este repositorio es el de albergar un sistema de salud estructural para los rieles de un tren. En este sistema, un dispositivo sensor captura los datos de vibracion y vibracion junto a una captura de imagen cada determinado tiempo para enviarlo por una cola de mansajes donde un servidor recibe y guarda esa informacion en una base de datos que despues, mediante una API, puede ser consultda por una aplicacion.
+## Descripción del proyecto
+El proyecto en este repositorio es el de albergar un sistema de salud estructural para los rieles de un tren. En este sistema, un dispositivo sensor captura los datos de vibración y ubicación junto a una captura de imagen cada determinado tiempo para enviarlo por una cola de mensajes donde un servidor recibe y guarda esa información en una base de datos que después, mediante una API, puede ser consultada por una aplicación.
 
-De la misma manera, se detecta y se guarda la informacion sobre una lectura anormal de la vibracion para su consulta posterior.
+De la misma manera, se detecta y se guarda la información sobre una lectura anormal de la vibración para su consulta posterior.
 
+El sistema sensor, que simula una placa programable ESP32; el worker y la API están desarrolladas en el lenguaje de Python. El frontend o aplicación para consultar la información de la Base de Datos está hecha en HTML y JavaScript. La Base de Datos está hecha con la herramienta de SQLite.
+
+Se utiliza RabbitMQ como sistema para manejar las colas de mensajes donde se envía y recibe la información.
 ## Elementos de la Infraestructura
 Nuestra infraestructura consistirá en las siguientes partes:
 - Sensores (vibración, GPS, cámara)
@@ -18,3 +21,67 @@ Nuestra infraestructura consistirá en las siguientes partes:
 - Servidor
 - PC (Usuario)
 ![image](https://github.com/v-Chriz-v/Internet-de-las-cosas/assets/54341749/1bba9400-7ea3-4454-afc9-8446e4c895bb)
+
+## Levantamiento del sistema
+En este apartado se explica cómo el sistema debe ser levantado para su correcto funcionamiento.
+
+### Servidor
+#### Dependencias necesarias
+Para poder ejecutar los elementos pertenecientes al Servidor en la infraestructura, es necesario tener las dependencias de Flask, CORS, SQLAlchemy y pika.
+
+En caso de no contar con estas dependencias, iniciar el CMD y ejecutar los siguientes comandos:
+
+`pip install flask`
+`pip install flask-cors`
+`pip install flask_sqlalchemy`
+`pip install pika`
+
+De la misma forma, se necesita tener RabbitMQ instalado en el sistema, así como tener una cuenta con el permiso de acceder al virtual host "/" con la siguiente información.
+
+`Nombre de usuario: Usuario1`
+`Contraseña: Contrasenia1`
+
+#### Worker
+El worker es el elemento que se encarga de escuchar la cola de mensajes y guardar la información en la base de datos. 
+
+Para iniciar este servicio, basta con abrirlo desde el explorador de archivos o acceder a la carpeta Servidor en el CMD y ejecutar:
+`python worker.py`
+
+Al hacer esto, el servicio creará una cola, empezará a escuchar la información proveniente de esa cola y almacena la información gracias a funciones dentro del archivo "func_sqlite.py".
+
+Para finalizar el worker, basta con presionar **Ctrl + C**.
+
+#### FlaskAPI
+La API implementada es la encargada de mandar información a través de la función GET que tiene incorporada, esto para hacer consultas a la base de datos hacia una aplicación.
+
+Para iniciar este servicio, basta con abrirlo desde el explorador de archivos o acceder a la carpeta Servidor en el CMD y ejecutar:
+`python FlaskAPI.py`
+
+Al hacer esto, la API se levantará y la aplicación podrá realizar consultas a la base de datos a través de ella.
+
+Para cerrar la API, basta con presionar **Ctrl + C**.
+
+### Dispositivo sensor
+#### Dependencias necesarias
+Para poder ejecutar los elementos pertenecientes a la placa programable (ESP32) en la infraestructura, es necesario tener las dependencias de pika y CV2.
+
+En caso de no contar con estas dependencias, iniciar el CMD y ejecutar los siguientes comandos:
+
+`pip install opencv-python`
+`pip install pika`
+
+#### ESP
+ESP es el encargado de capturar la información sobre la ubicación y vibración del tren, además de tomar una captura del momento. Después, la información es enviada por una cola de mensajes hacia el worker dentro del servidor.
+
+Para iniciar esta simulación de captura de información, basta con abrirlo desde el explorador de archivos o acceder a la carpeta ESP en el CMD y ejecutar:
+`python ESP.py`
+
+Al hacer esto, la API se levantará y la aplicación podrá realizar consultas a la base de datos a través de ella.
+
+Para cerrar la API, basta con presionar **Ctrl + C**.
+
+### Aplicación o interfaz
+#### Frontend
+La aplicación es una página en HTML que, utilizando JavaScript, realiza una consulta a la base de datos y obtiene los datos de ubicación, vibración y captura pertenecientes a esa fecha.
+
+Para iniciar esta aplicación, basta con abrirla desde el explorador de archivos. Esto abrirá una ventana del navegador mostrando la aplicación. Para ver la información sobre las lecturas de un día, seleccione el día en el recuadro de abajo y presione Cargar Datos. Esto cargará la información solicitada.
