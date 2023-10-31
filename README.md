@@ -5,13 +5,12 @@
 - Angel Daniel Lopez Alvarez
 - Marco Antonio Alfaro Baruch
 
-## Descripcion
-Este sera un repositorio donde se trabajara el proyecto de Internet de las Cosas sobre Ciudades. 
+## Descripcion del proyecto
+El proyecto en este repositorio es el de albergar un sistema de salud estructural para los rieles de un tren. En este sistema, un dispositivo sensor captura los datos de vibracion y vibracion junto a una captura de imagen cada determinado tiempo para enviarlo por una cola de mansajes donde un servidor recibe y guarda esa informacion en una base de datos que despues, mediante una API, puede ser consultda por una aplicacion.
 
-### Solucion
-Debido a las recomendaciones sobre la primera solución, se ha decidido cambiar el enfoque a la salud estructural de los rieles de un tren diseñando e implementando un dispositivo sensorial que tiene como objetivo, realizar lecturas constantes de diversas características dentro de las vías del tren, esto por medio de sensores especializados en  las vibraciones que capturan y registran información durante el recorrido del tren, misma que será subida a una basa de datos por medio de una API una vez finalizados los recorridos entre estaciones.
+De la misma manera, se detecta y se guarda la informacion sobre una lectura anormal de la vibracion para su consulta posterior.
 
-## Infraestructura
+## Elementos de la Infraestructura
 Nuestra infraestructura consistirá en las siguientes partes:
 - Sensores (vibración, GPS, cámara)
 - Placa programable
