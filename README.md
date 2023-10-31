@@ -56,8 +56,8 @@ Para finalizar el worker, basta con presionar **Ctrl + C**.
 La API implementada es la encargada de mandar información a través de la función GET que tiene incorporada, esto para hacer consultas a la base de datos hacia una aplicación.
 
 El API cuenta con dos endpoints:
-* `/api/datos` Manda la información de los ultimos 10 segundos
-* `/api/datos/fecha` Manda todos los datos de un día en específico
+* `/api/datos` Manda la información de los ultimos 10 segundos.
+* `/api/datos/fecha` Manda todos los datos de un día en específico.
 
 Para iniciar este servicio, basta con abrirlo desde el explorador de archivos o acceder a la carpeta Servidor en el CMD y ejecutar:
 `python FlaskAPI.py`
@@ -84,7 +84,7 @@ Genera valores aleatorios para latitud y longitud:
 * Longitud: -180, 180
 
 ### Sensor cámara
-Hace una captura y almacena la imagen en formato base64.
+Hace una captura y retorna la imagen en formato base64.
  
 #### ESP
 ESP es el encargado de capturar la información sobre la ubicación y vibración del tren, además de tomar una captura del momento. Después, la información es enviada por una cola de mensajes hacia el worker dentro del servidor. El ESP está configurado para mandar información durante 10 segundos representando "el recorrido" que hace el tren hasta una estación.
