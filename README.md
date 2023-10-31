@@ -21,6 +21,7 @@ Nuestra infraestructura consistirá en las siguientes partes:
 - Servidor
 - PC (Usuario)
 ![image](https://github.com/v-Chriz-v/Internet-de-las-cosas/assets/54341749/1bba9400-7ea3-4454-afc9-8446e4c895bb)
+![image](https://github.com/v-Chriz-v/Internet-de-las-cosas/assets/147886154/e9627154-258d-43f4-84df-6e0ee29ab26a)
 
 ## Levantamiento del sistema
 En este apartado se explica cómo el sistema debe ser levantado para su correcto funcionamiento.
@@ -54,6 +55,10 @@ Para finalizar el worker, basta con presionar **Ctrl + C**.
 #### FlaskAPI
 La API implementada es la encargada de mandar información a través de la función GET que tiene incorporada, esto para hacer consultas a la base de datos hacia una aplicación.
 
+El API cuenta con dos endpoints:
+* `/api/datos` Manda la información de los ultimos 10 segundos
+* `/api/datos/fecha` Manda todos los datos de un día en específico
+
 Para iniciar este servicio, basta con abrirlo desde el explorador de archivos o acceder a la carpeta Servidor en el CMD y ejecutar:
 `python FlaskAPI.py`
 
@@ -70,8 +75,19 @@ En caso de no contar con estas dependencias, iniciar el CMD y ejecutar los sigui
 `pip install opencv-python`
 `pip install pika`
 
+### Sensor v¿Vibracion
+Genera valores de 0 a 1 que son considerados normales, con una probabilidad de un 20% de generar un valor anormal que es de 1.5 a 2.5.
+
+### Sensor GPS
+Genera valores aleatorios para latitud y longitud:
+* Latitud: -90, 90
+* Longitud: -180, 180
+
+### Sensor cámara
+Hace una captura y almacena la imagen en formato base64.
+ 
 #### ESP
-ESP es el encargado de capturar la información sobre la ubicación y vibración del tren, además de tomar una captura del momento. Después, la información es enviada por una cola de mensajes hacia el worker dentro del servidor.
+ESP es el encargado de capturar la información sobre la ubicación y vibración del tren, además de tomar una captura del momento. Después, la información es enviada por una cola de mensajes hacia el worker dentro del servidor. El ESP está configurado para mandar información durante 10 segundos representando "el recorrido" que hace el tren hasta una estación.
 
 Para iniciar esta simulación de captura de información, basta con abrirlo desde el explorador de archivos o acceder a la carpeta ESP en el CMD y ejecutar:
 `python ESP.py`
